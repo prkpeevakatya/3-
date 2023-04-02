@@ -132,9 +132,14 @@ void udalenie(int kol, muz* mass)  //вопросы..
     for (;;) {
         cout << "vvedite nomer dela, kotoroe nado ydalit - ";
         cin >> ho;
-        break;
         if (ho > kol) {
             cout << endl << "vi nepravilno vveli nomer, poprobuite eshe raz))" << endl;
+        }
+        else if (ho < kol ){
+        cout << endl << "vi nepravilno vveli nomer, poprobuite eshe raz))" << endl;
+        }
+        else{
+        break;
         }
     }
 
