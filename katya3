@@ -1,5 +1,5 @@
 /*
-Создайте приложение «Список дел». 
+Создайте приложение «Список дел».
 Приложение должно позволять:
 ■ Добавление дел. У дела есть:
 • название;
@@ -28,6 +28,8 @@
 
 
 
+//код
+
 #include <iostream>
 #include <fstream>
 #include <windows.h> 
@@ -43,31 +45,39 @@ struct muz
 };
 
 //int op = 0;
+int kol = 1;
 
-
-void vvod (int kol, muz * mass)
+void vvod(int kol, muz* mass)
 {
-       kol++;
+    kol++;
 
-       muz* mass2 = new muz[kol];
+    muz* mass2 = new muz[kol];
 
-       for (int u = 0; u < kol - 1; u++) {
-           mass2[u].name = mass[u].name;
-           mass2[u].prior = mass[u].prior;
-           mass2[u].opis = mass[u].opis;
-           mass2[u].data = mass[u].data;
-       }
+    for (int u = 0; u < kol - 1; u++) {
+        mass2[u].name = mass[u].name;
+        mass2[u].prior = mass[u].prior;
+        mass2[u].opis = mass[u].opis;
+        mass2[u].data = mass[u].data;
+    }
 
-    cout << "vvedite vashe delo: ";
+    cout << "vvedite nazvanie dela: ";
     cin >> mass2[kol - 1].name;
     cout << endl;
-    cout << "vvedite prioritet dela (from 1 to 10):";
-    cin >> mass2[kol - 1].prior;
-    cout << endl;
+    for (;;) {
+        cout << "vvedite prioritet dela (from 1 to 10):";
+        cin >> mass2[kol - 1].prior;
+        if (mass2[kol - 1].prior < 1 or mass2[kol - 1].prior > 10) {
+            cout << "vi nepravilno vvveli chislo, poprobuite eche))" << endl;
+        }
+        else {
+            cout << endl;
+            break;
+        }
+    }
     cout << "vvedite opisanie dela: ";
     cin >> mass2[kol - 1].opis;
     cout << endl;
-    cout << "vvedite datu dela ( day, mecyac, god bez probelov (000000)) ";
+    cout << "vvedite datu dela ( day, mecyac, god bez probelov (151206)) ";
     cin >> mass2[kol - 1].data;
     cout << endl;
 
@@ -79,9 +89,9 @@ void vvod (int kol, muz * mass)
 
 
 
-void izmenu (int kol, muz * mass)
+void izmenu(int kol, muz* mass)
 {
-    
+
     for (;;) {
         string f;
         int ox;
@@ -91,28 +101,28 @@ void izmenu (int kol, muz * mass)
             cout << "vvedite kakoe po chety delo vi xotite izmenit - " << endl;
             cin >> ox;
             cout << "vvedite novoe imya dela - " << endl;
-            cin >> mass[ox].name;
+            cin >> mass[ox-1].name;
             break;
         }
         else if (f == "prior") {
             cout << "vvedite kakoe po chety delo vi xotite izmenit - " << endl;
             cin >> ox;
             cout << "vvedite novii prioritet dela - " << endl;
-            cin >> mass[ox].prior;
+            cin >> mass[ox-1].prior;
             break;
         }
         else if (f == "opis") {
             cout << "vvedite kakoe po chety delo vi xotite izmenit - " << endl;
             cin >> ox;
             cout << "vvedite novoe opisanie dela - " << endl;
-            cin >> mass[ox].opis;
+            cin >> mass[ox-1].opis;
             break;
         }
         else if (f == "data") {
             cout << "vvedite kakoe po chety delo vi xotite izmenit - " << endl;
             cin >> ox;
             cout << "vvedite novuyu datu dela - " << endl;
-            cin >> mass[ox].data;
+            cin >> mass[ox-1].data;
             break;
         }
         else {
@@ -135,23 +145,23 @@ void udalenie(int kol, muz* mass)  //вопросы..
         if (ho > kol) {
             cout << endl << "vi nepravilno vveli nomer, poprobuite eshe raz))" << endl;
         }
-        else if (ho < kol ){
-        cout << endl << "vi nepravilno vveli nomer, poprobuite eshe raz))" << endl;
+        else if (ho < kol) {
+            cout << endl << "vi nepravilno vveli nomer, poprobuite eshe raz))" << endl;
         }
-        else{
-        break;
+        else {
+            break;
         }
     }
 
     for (;;) {
-    cout << "if ti yveren - vvedi 1, esli oshibsya - vvedi 2 :  ";
-    cin >> lol;
-    
+        cout << "if ti yveren - vvedi 1, esli oshibsya - vvedi 2 :  ";
+        cin >> lol;
+
         if (lol == 1) {
-            delete[] mass[ho];
+            delete mass;
             break;
         }
-    
+
 
         else if (lol == 2) {
             cout << endl << "okay !" << endl;
@@ -165,8 +175,8 @@ void udalenie(int kol, muz* mass)  //вопросы..
 
 
 
-void poisk (int kol, muz* mass)
-{           
+void poisk(int kol, muz* mass)
+{
     string cool;
     cout << "POISK" << endl;
     for (;;) {
@@ -259,7 +269,7 @@ void pokazdel(int kol, muz* mass)
 {
     int za;
     for (;;) {
-        cout << "what do you want?? pokaz del(1) ili poisk po date(2)/prioritety(3) vvedite chislo - ";
+        cout << "what do you want??"<<endl<<"pokaz del(1) ili poisk po date(2) / prioritety(3) vvedite chislo - ";
         cin >> za;
         if (za == 1) {
             for (int po = 0; po < kol; po++) {
@@ -306,29 +316,16 @@ void pokazdel(int kol, muz* mass)
 
 int main()
 {
-    int kol = 1;
+    
     muz* mass = new muz[kol];
 
-    for (int y = 0; y < kol; y++) {
-        cout << "enter nazvanie dela - ";
-        cin >> mass[y].name;
-        cout << endl;
-        cout << "enter prioritet dela - ";
-        cin >> mass[y].prior;
-        cout << endl;
-        cout << "enter opisanie dela  - ";
-        cin >> mass[y].opis;
-        cout << endl;
-        cout << "enter datu vapolneniya - ";
-        cin >> mass[y].data;
-        cout << endl;
-    }
+    vvod(kol, mass);
 
 
 
     int vib;
     for (;;) {
-        cout << "---MENU---";
+        cout << "---MENU---" << endl;
         cout << "1 - dobavit delo" << endl;
         cout << "2 - ydalit delo" << endl;
         cout << "3 - redactirovat delo" << endl;
